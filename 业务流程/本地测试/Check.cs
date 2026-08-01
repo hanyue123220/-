@@ -185,25 +185,36 @@ namespace 视觉检测系统.业务流程.本地测试
                     AddLog.WriteLog("toolblock运行成功");
                     if (greyImage == null && colorImage ==null)
                     {
-                    
-                        string key = toolBlock.UserData["DisplayImageKey"].ToString();
+                        string key = "";
+                        try
+                        {
+                            key = toolBlock.UserData["DisplayImageKey"].ToString();
+                        }
+                        catch
+                        {
 
-                
+                            MessageBox.Show("未设置任何输出图像，无法进行显示");
+                            return;
+                        }
+
                         ICogRecord record = toolBlock.CreateLastRunRecord();
 
-                        ICogRecord imageRecord = FindRecordByKey(record, key);
+                            ICogRecord imageRecord = FindRecordByKey(record, key);
 
-                        display.Record = imageRecord;
+                            display.Record = imageRecord;
 
-                        display.Fit();
-                        AddLog.WriteLog("显示脚本图像成功");
+                            display.Fit();
+                            AddLog.WriteLog("显示脚本图像成功");
+                      
                     }
                     else if(greyImage != null)
                     {
                         display.Image = greyImage;
+                        display.Fit();
                     }
                     else if(colorImage!=null){
                         display.Image = colorImage;
+                        display.Fit();
                     }
              
                 }
