@@ -426,6 +426,7 @@
     <Compile Include="业务流程\方案\保存方案\SavePlan.cs" />
     <Compile Include="业务流程\本地测试\Check.cs" />
     <Compile Include="业务流程\本地测试\加载文件夹.cs" />
+    <Compile Include="存图\SaveImage.cs" />
     <Compile Include="通用函数层\AddLog.cs" />
     <Compile Include="通用函数层\UpdateUi.cs" />
     <EmbeddedResource Include="Form1.resx">

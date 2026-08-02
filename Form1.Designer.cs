@@ -46,6 +46,9 @@
             this.九点标定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.日志ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开程序ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.保存图片ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.保存方案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.加载方案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -58,9 +61,7 @@
             this.检测_button = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.保存图片ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.保存方案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.加载方案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.存图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -112,7 +113,8 @@
             this.标定ToolStripMenuItem,
             this.日志ToolStripMenuItem,
             this.打开程序ToolStripMenuItem,
-            this.保存图片ToolStripMenuItem});
+            this.保存图片ToolStripMenuItem,
+            this.存图ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(916, 42);
@@ -163,7 +165,7 @@
             this.相机采图ToolStripMenuItem1,
             this.本地测试ToolStripMenuItem1});
             this.新建程序ToolStripMenuItem.Name = "新建程序ToolStripMenuItem";
-            this.新建程序ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.新建程序ToolStripMenuItem.Size = new System.Drawing.Size(218, 34);
             this.新建程序ToolStripMenuItem.Text = "新建程序";
             this.新建程序ToolStripMenuItem.Click += new System.EventHandler(this.新建程序ToolStripMenuItem_Click);
             // 
@@ -183,7 +185,7 @@
             // 加载已有程序ToolStripMenuItem
             // 
             this.加载已有程序ToolStripMenuItem.Name = "加载已有程序ToolStripMenuItem";
-            this.加载已有程序ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.加载已有程序ToolStripMenuItem.Size = new System.Drawing.Size(218, 34);
             this.加载已有程序ToolStripMenuItem.Text = "加载已有程序";
             this.加载已有程序ToolStripMenuItem.Click += new System.EventHandler(this.加载已有程序ToolStripMenuItem_Click);
             // 
@@ -214,6 +216,29 @@
             this.打开程序ToolStripMenuItem.Size = new System.Drawing.Size(98, 38);
             this.打开程序ToolStripMenuItem.Text = "打开程序";
             this.打开程序ToolStripMenuItem.Click += new System.EventHandler(this.打开程序ToolStripMenuItem_Click);
+            // 
+            // 保存图片ToolStripMenuItem
+            // 
+            this.保存图片ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.保存方案ToolStripMenuItem,
+            this.加载方案ToolStripMenuItem});
+            this.保存图片ToolStripMenuItem.Name = "保存图片ToolStripMenuItem";
+            this.保存图片ToolStripMenuItem.Size = new System.Drawing.Size(62, 38);
+            this.保存图片ToolStripMenuItem.Text = "方案";
+            // 
+            // 保存方案ToolStripMenuItem
+            // 
+            this.保存方案ToolStripMenuItem.Name = "保存方案ToolStripMenuItem";
+            this.保存方案ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.保存方案ToolStripMenuItem.Text = "保存方案";
+            this.保存方案ToolStripMenuItem.Click += new System.EventHandler(this.保存方案ToolStripMenuItem_Click);
+            // 
+            // 加载方案ToolStripMenuItem
+            // 
+            this.加载方案ToolStripMenuItem.Name = "加载方案ToolStripMenuItem";
+            this.加载方案ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.加载方案ToolStripMenuItem.Text = "加载方案";
+            this.加载方案ToolStripMenuItem.Click += new System.EventHandler(this.加载方案ToolStripMenuItem_Click);
             // 
             // panel2
             // 
@@ -354,28 +379,12 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // 保存图片ToolStripMenuItem
+            // 存图ToolStripMenuItem
             // 
-            this.保存图片ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.保存方案ToolStripMenuItem,
-            this.加载方案ToolStripMenuItem});
-            this.保存图片ToolStripMenuItem.Name = "保存图片ToolStripMenuItem";
-            this.保存图片ToolStripMenuItem.Size = new System.Drawing.Size(62, 38);
-            this.保存图片ToolStripMenuItem.Text = "方案";
-            // 
-            // 保存方案ToolStripMenuItem
-            // 
-            this.保存方案ToolStripMenuItem.Name = "保存方案ToolStripMenuItem";
-            this.保存方案ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.保存方案ToolStripMenuItem.Text = "保存方案";
-            this.保存方案ToolStripMenuItem.Click += new System.EventHandler(this.保存方案ToolStripMenuItem_Click);
-            // 
-            // 加载方案ToolStripMenuItem
-            // 
-            this.加载方案ToolStripMenuItem.Name = "加载方案ToolStripMenuItem";
-            this.加载方案ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.加载方案ToolStripMenuItem.Text = "加载方案";
-            this.加载方案ToolStripMenuItem.Click += new System.EventHandler(this.加载方案ToolStripMenuItem_Click);
+            this.存图ToolStripMenuItem.Name = "存图ToolStripMenuItem";
+            this.存图ToolStripMenuItem.Size = new System.Drawing.Size(62, 38);
+            this.存图ToolStripMenuItem.Text = "存图";
+            this.存图ToolStripMenuItem.Click += new System.EventHandler(this.存图ToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -436,6 +445,7 @@
         private System.Windows.Forms.ToolStripMenuItem 保存图片ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 保存方案ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 加载方案ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 存图ToolStripMenuItem;
     }
 }
 

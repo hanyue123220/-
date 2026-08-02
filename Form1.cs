@@ -341,6 +341,9 @@ namespace 视觉检测系统
             MessageBox.Show($"已自动加载方案：{choosePlanName}\nVPP路径：{targetVppPath}", "加载成功");
         }
 
-     
+        private void 存图ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
