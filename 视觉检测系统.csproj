@@ -422,6 +422,13 @@
     <Compile Include="UI界面\加载程序\LoadLocalVppUi.Designer.cs">
       <DependentUpon>LoadLocalVppUi.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI界面\设置\SettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI界面\设置\SettingForm.Designer.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI界面\设置\存图设置\saveImgSet.cs" />
     <Compile Include="业务流程\加载程序\加载现有程序\LoadLocalVpp.cs" />
     <Compile Include="业务流程\加载程序\新建程序\AddNewVpp.cs" />
     <Compile Include="业务流程\方案\保存方案\PlanItem.cs" />
@@ -449,6 +456,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI界面\加载程序\LoadLocalVppUi.resx">
       <DependentUpon>LoadLocalVppUi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI界面\设置\SettingForm.resx">
+      <DependentUpon>SettingForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">

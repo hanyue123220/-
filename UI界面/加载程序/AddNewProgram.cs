@@ -154,8 +154,8 @@ namespace 视觉检测系统.UI界面.加载程序
             {
                 AddLog.WriteLog("【关闭校验】输出终端未找到灰度图/彩色图，尝试读取脚本DisplayImageKey图像");
                 // 尝试读取脚本UserData里的图像记录方案
-                if (toolBlock.RunStatus.Result == CogToolResultConstants.Accept)
-                {
+                //if (toolBlock.RunStatus.Result == CogToolResultConstants.Accept)
+                //{
                     string key = "";
                     try
                     {
@@ -177,7 +177,7 @@ namespace 视觉检测系统.UI界面.加载程序
                         // 捕获DisplayImageKey不存在异常，标记校验不通过
                         AddLog.WriteLog("【关闭校验】未设置DisplayImageKey");
                     }
-                }
+                //}
             }
 
             // 校验不通过，弹出选择框：强制关闭 / 取消关闭

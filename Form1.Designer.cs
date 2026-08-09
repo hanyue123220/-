@@ -244,8 +244,8 @@
             // 
             this.存图ToolStripMenuItem.Name = "存图ToolStripMenuItem";
             this.存图ToolStripMenuItem.Size = new System.Drawing.Size(62, 38);
-            this.存图ToolStripMenuItem.Text = "存图";
-            this.存图ToolStripMenuItem.Click += new System.EventHandler(this.存图ToolStripMenuItem_Click);
+            this.存图ToolStripMenuItem.Text = "设置";
+            this.存图ToolStripMenuItem.Click += new System.EventHandler(this.设置ToolStripMenuItem_Click);
             // 
             // panel2
             // 

@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using 视觉检测系统.UI界面.加载程序;
+using 视觉检测系统.UI界面.设置;
 using 视觉检测系统.业务流程;
 using 视觉检测系统.业务流程.加载程序.新建程序;
 using 视觉检测系统.业务流程.本地测试;
@@ -38,7 +39,14 @@ namespace 视觉检测系统
 				return cogRecordDisplayStart;
 			}
 		}
-		public Form1()
+        public CogRecordDisplay displayEnd
+        {
+            get
+            {
+                return cogRecordDisplayEnd;
+            }
+        }
+        public Form1()
 		{
 			InitializeComponent();
 			this.Size = new Size(1200, 800);
@@ -151,6 +159,7 @@ namespace 视觉检测系统
 		Check check = new Check();
 		private void 检测_button_Click(object sender, EventArgs e)
 		{
+			check.mainform=this;
 			try
 			{
 				ICogImage image = CurrentImage;
@@ -185,13 +194,14 @@ namespace 视觉检测系统
 						AddLog.WriteLog("已选择新建VPP");
 						if (check.checkLocalImg(newtoolBlock, image))
 						{
-							AddLog.WriteLog("新建vpp检测完成");
+							AddLog.WriteLog("新建vpp检测完成,结果为OK");
 							check.showResultImg(cogRecordDisplayEnd, newtoolBlock);
 						}
 						else
 						{
-							AddLog.WriteLog("新建vpp检测失败");
-						}
+							AddLog.WriteLog("新建vpp检测失败,结果为NG");
+                            check.showResultImg(cogRecordDisplayEnd, newtoolBlock);
+                        }
 					}
 					else
 					{
@@ -204,13 +214,14 @@ namespace 视觉检测系统
 						AddLog.WriteLog("已选择原有VPP");
 						if (check.checkLocalImg(toolBlock, image))
 						{
-							AddLog.WriteLog("检测完成");
+							AddLog.WriteLog("检测完成,结果为OK");
 							check.showResultImg(cogRecordDisplayEnd, toolBlock);
 						}
 						else
 						{
-							AddLog.WriteLog("检测失败");
-						}
+							AddLog.WriteLog("检测失败,结果为NG");
+                            check.showResultImg(cogRecordDisplayEnd, toolBlock);
+                        }
 					}
 				}
 				// 情况2：只有新建VPP
@@ -218,27 +229,29 @@ namespace 视觉检测系统
 				{
 					if (check.checkLocalImg(newtoolBlock, image))
 					{
-						AddLog.WriteLog("新建vpp检测完成");
+						AddLog.WriteLog("新建vpp检测完成,结果为OK");
 						check.showResultImg(cogRecordDisplayEnd, newtoolBlock);
 					}
 					else
 					{
-						AddLog.WriteLog("新建vpp检测失败");
-					}
+						AddLog.WriteLog("新建vpp检测失败,结果为NG");
+                        check.showResultImg(cogRecordDisplayEnd, newtoolBlock);
+                    }
 				}
 				// 情况3：只有原有VPP
 				else if (toolBlock != null)
 				{
-					if (check.checkLocalImg(toolBlock, image))
-					{
-						AddLog.WriteLog("检测完成");
-						check.showResultImg(cogRecordDisplayEnd, toolBlock);
-					}
-					else
-					{
-						AddLog.WriteLog("检测失败");
-					}
-				}
+                    if (check.checkLocalImg(toolBlock, image))
+                    {
+                        AddLog.WriteLog("检测完成,结果为OK");
+                        check.showResultImg(cogRecordDisplayEnd, toolBlock);
+                    }
+                    else
+                    {
+                        AddLog.WriteLog("检测失败,结果为NG");
+                        check.showResultImg(cogRecordDisplayEnd, toolBlock);
+                    }
+                }
 			}
 			catch (Exception ex)
 			{
@@ -252,7 +265,7 @@ namespace 视觉检测系统
 		{
 			if (newtoolBlock != null)
 			{
-				AddLog.WriteLog("打开newtoolblock");
+				//AddLog.WriteLog("打开newtoolblock");
 				newUi = new AddNewProgram(this);
 				newUi.Show();
 				newUi.RefreshToolBlockImage(CurrentImage);//同步打开newtoolBlock窗口的输入图片
@@ -261,7 +274,7 @@ namespace 视觉检测系统
 			}
 			if (toolBlock != null)
 			{
-				AddLog.WriteLog("打开toolBlock");
+				//AddLog.WriteLog("打开toolBlock");
 				loadUi = new LoadLocalVppUi(this);
 				loadUi.Show();
 				loadUi.RefreshToolBlockImage(CurrentImage);//同步打开toolblcok窗口的输入图片
@@ -349,10 +362,16 @@ namespace 视觉检测系统
 			toolBlock = await loader.IniLoadSave();
 			MessageBox.Show($"已自动加载方案：{choosePlanName}\nVPP路径：{targetVppPath}", "加载成功");
 		}
-
-        private void 存图ToolStripMenuItem_Click(object sender, EventArgs e)
+        SettingForm setForm = null;
+        private void 设置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-			MessageBox.Show("i");
+            if (setForm == null || setForm.IsDisposed)
+            {
+                setForm = new SettingForm(this);
+            }
+            setForm.Show();
         }
+
+
     }
 }

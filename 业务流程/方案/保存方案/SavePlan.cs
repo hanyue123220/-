@@ -155,7 +155,7 @@ namespace 视觉检测系统.业务流程
             var selectForm = new Form
             {
                 Text = "选择已保存方案",
-                Size = new Size(350, 180),
+                Size = new Size(500, 250),
                 StartPosition = FormStartPosition.CenterParent,
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 MaximizeBox = false,
@@ -172,7 +172,7 @@ namespace 视觉检测系统.业务流程
             var cboPlan = new ComboBox
             {
                 Location = new Point(20, 50),
-                Size = new Size(280, 25),
+                Size = new Size(450, 25),
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
 
@@ -186,14 +186,14 @@ namespace 视觉检测系统.业务流程
             var btnConfirm = new Button
             {
                 Text = "确定加载",
-                Location = new Point(70, 100),
+                Location = new Point(120, 130),
                 Size = new Size(90, 30)
             };
 
             var btnCancel = new Button
             {
                 Text = "取消",
-                Location = new Point(180, 100),
+                Location = new Point(230, 130),
                 Size = new Size(90, 30)
             };
 
@@ -232,8 +232,8 @@ namespace 视觉检测系统.业务流程
         {
             Form f = new Form
             {
-                Width = 360,
-                Height = 160,
+                Width = 500,
+                Height = 300,
                 Text = caption,
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 StartPosition = FormStartPosition.CenterParent,
