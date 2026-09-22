@@ -58,6 +58,9 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.cogRecordDisplayEnd = new Cognex.VisionPro.CogRecordDisplay();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.检测_button = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -73,6 +76,8 @@
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cogRecordDisplayEnd)).BeginInit();
             this.panel6.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -89,7 +94,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.839779F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 91.16022F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 63F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(922, 607);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1016, 587);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel1
@@ -98,7 +103,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(916, 42);
+            this.panel1.Size = new System.Drawing.Size(1010, 40);
             this.panel1.TabIndex = 0;
             // 
             // menuStrip1
@@ -117,15 +122,16 @@
             this.存图ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(916, 42);
+            this.menuStrip1.Size = new System.Drawing.Size(1010, 40);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // 相机采图ToolStripMenuItem
             // 
             this.相机采图ToolStripMenuItem.Name = "相机采图ToolStripMenuItem";
-            this.相机采图ToolStripMenuItem.Size = new System.Drawing.Size(98, 38);
+            this.相机采图ToolStripMenuItem.Size = new System.Drawing.Size(98, 36);
             this.相机采图ToolStripMenuItem.Text = "相机采图";
+            this.相机采图ToolStripMenuItem.Click += new System.EventHandler(this.相机采图ToolStripMenuItem_Click);
             // 
             // 本地测试ToolStripMenuItem
             // 
@@ -133,7 +139,7 @@
             this.加载文件夹ToolStripMenuItem,
             this.加载单个文件ToolStripMenuItem});
             this.本地测试ToolStripMenuItem.Name = "本地测试ToolStripMenuItem";
-            this.本地测试ToolStripMenuItem.Size = new System.Drawing.Size(98, 38);
+            this.本地测试ToolStripMenuItem.Size = new System.Drawing.Size(98, 36);
             this.本地测试ToolStripMenuItem.Text = "本地测试";
             // 
             // 加载文件夹ToolStripMenuItem
@@ -155,7 +161,7 @@
             this.新建程序ToolStripMenuItem,
             this.加载已有程序ToolStripMenuItem});
             this.加载程序ToolStripMenuItem.Name = "加载程序ToolStripMenuItem";
-            this.加载程序ToolStripMenuItem.Size = new System.Drawing.Size(98, 38);
+            this.加载程序ToolStripMenuItem.Size = new System.Drawing.Size(98, 36);
             this.加载程序ToolStripMenuItem.Text = "加载程序";
             this.加载程序ToolStripMenuItem.Click += new System.EventHandler(this.加载程序ToolStripMenuItem_Click);
             // 
@@ -194,7 +200,7 @@
             this.标定ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.九点标定ToolStripMenuItem});
             this.标定ToolStripMenuItem.Name = "标定ToolStripMenuItem";
-            this.标定ToolStripMenuItem.Size = new System.Drawing.Size(62, 38);
+            this.标定ToolStripMenuItem.Size = new System.Drawing.Size(62, 36);
             this.标定ToolStripMenuItem.Text = "标定";
             // 
             // 九点标定ToolStripMenuItem
@@ -206,14 +212,14 @@
             // 日志ToolStripMenuItem
             // 
             this.日志ToolStripMenuItem.Name = "日志ToolStripMenuItem";
-            this.日志ToolStripMenuItem.Size = new System.Drawing.Size(62, 38);
+            this.日志ToolStripMenuItem.Size = new System.Drawing.Size(62, 36);
             this.日志ToolStripMenuItem.Text = "日志";
             this.日志ToolStripMenuItem.Click += new System.EventHandler(this.日志ToolStripMenuItem_Click);
             // 
             // 打开程序ToolStripMenuItem
             // 
             this.打开程序ToolStripMenuItem.Name = "打开程序ToolStripMenuItem";
-            this.打开程序ToolStripMenuItem.Size = new System.Drawing.Size(98, 38);
+            this.打开程序ToolStripMenuItem.Size = new System.Drawing.Size(98, 36);
             this.打开程序ToolStripMenuItem.Text = "打开程序";
             this.打开程序ToolStripMenuItem.Click += new System.EventHandler(this.打开程序ToolStripMenuItem_Click);
             // 
@@ -223,7 +229,7 @@
             this.保存方案ToolStripMenuItem,
             this.加载方案ToolStripMenuItem});
             this.保存图片ToolStripMenuItem.Name = "保存图片ToolStripMenuItem";
-            this.保存图片ToolStripMenuItem.Size = new System.Drawing.Size(62, 38);
+            this.保存图片ToolStripMenuItem.Size = new System.Drawing.Size(62, 36);
             this.保存图片ToolStripMenuItem.Text = "方案";
             // 
             // 保存方案ToolStripMenuItem
@@ -243,7 +249,7 @@
             // 存图ToolStripMenuItem
             // 
             this.存图ToolStripMenuItem.Name = "存图ToolStripMenuItem";
-            this.存图ToolStripMenuItem.Size = new System.Drawing.Size(62, 38);
+            this.存图ToolStripMenuItem.Size = new System.Drawing.Size(62, 36);
             this.存图ToolStripMenuItem.Text = "设置";
             this.存图ToolStripMenuItem.Click += new System.EventHandler(this.设置ToolStripMenuItem_Click);
             // 
@@ -251,9 +257,9 @@
             // 
             this.panel2.Controls.Add(this.panel4);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 51);
+            this.panel2.Location = new System.Drawing.Point(3, 49);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(916, 489);
+            this.panel2.Size = new System.Drawing.Size(1010, 471);
             this.panel2.TabIndex = 1;
             // 
             // panel4
@@ -262,7 +268,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(916, 489);
+            this.panel4.Size = new System.Drawing.Size(1010, 471);
             this.panel4.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -277,7 +283,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(916, 489);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1010, 471);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // panel3
@@ -286,7 +292,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(452, 483);
+            this.panel3.Size = new System.Drawing.Size(499, 465);
             this.panel3.TabIndex = 0;
             // 
             // cogRecordDisplayStart
@@ -304,16 +310,16 @@
             this.cogRecordDisplayStart.MouseWheelSensitivity = 1D;
             this.cogRecordDisplayStart.Name = "cogRecordDisplayStart";
             this.cogRecordDisplayStart.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("cogRecordDisplayStart.OcxState")));
-            this.cogRecordDisplayStart.Size = new System.Drawing.Size(452, 483);
+            this.cogRecordDisplayStart.Size = new System.Drawing.Size(499, 465);
             this.cogRecordDisplayStart.TabIndex = 0;
             // 
             // panel5
             // 
             this.panel5.Controls.Add(this.cogRecordDisplayEnd);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(461, 3);
+            this.panel5.Location = new System.Drawing.Point(508, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(452, 483);
+            this.panel5.Size = new System.Drawing.Size(499, 465);
             this.panel5.TabIndex = 1;
             // 
             // cogRecordDisplayEnd
@@ -331,20 +337,54 @@
             this.cogRecordDisplayEnd.MouseWheelSensitivity = 1D;
             this.cogRecordDisplayEnd.Name = "cogRecordDisplayEnd";
             this.cogRecordDisplayEnd.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("cogRecordDisplayEnd.OcxState")));
-            this.cogRecordDisplayEnd.Size = new System.Drawing.Size(452, 483);
+            this.cogRecordDisplayEnd.Size = new System.Drawing.Size(499, 465);
             this.cogRecordDisplayEnd.TabIndex = 0;
             // 
             // panel6
             // 
+            this.panel6.Controls.Add(this.tableLayoutPanel3);
             this.panel6.Controls.Add(this.button4);
             this.panel6.Controls.Add(this.检测_button);
             this.panel6.Controls.Add(this.button2);
             this.panel6.Controls.Add(this.button1);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(3, 546);
+            this.panel6.Location = new System.Drawing.Point(3, 526);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(916, 58);
+            this.panel6.Size = new System.Drawing.Size(1010, 58);
             this.panel6.TabIndex = 2;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.panel7, 0, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(857, 0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(153, 58);
+            this.tableLayoutPanel3.TabIndex = 5;
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.label1);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel7.Location = new System.Drawing.Point(3, 3);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(147, 52);
+            this.panel7.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.ForeColor = System.Drawing.Color.Red;
+            this.label1.Location = new System.Drawing.Point(10, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(134, 31);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "通讯未链接";
             // 
             // button4
             // 
@@ -390,11 +430,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(922, 607);
+            this.ClientSize = new System.Drawing.Size(1016, 587);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -408,6 +449,9 @@
             this.panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.cogRecordDisplayEnd)).EndInit();
             this.panel6.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -446,6 +490,9 @@
         private System.Windows.Forms.ToolStripMenuItem 保存方案ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 加载方案ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 存图ToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Panel panel7;
     }
 }
 

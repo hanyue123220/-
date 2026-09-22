@@ -352,6 +352,7 @@ using Cognex.VisionPro;
 using Cognex.VisionPro.Caliper;
 using Cognex.VisionPro.Exceptions;
 using Cognex.VisionPro.ImageFile;
+
 using Cognex.VisionPro.ToolBlock;
 using System;
 using System.Collections.Concurrent;
@@ -440,11 +441,7 @@ namespace 视觉检测系统.业务流程.本地测试
                 return false;
             }
 
-            // ★修复：停止批量检测，避免两个流程共用toolBlock导致图像被释放
-            StopMultiCheck();
-
-            // ★修复：批量检测结束后toolBlock内部可能残留已释放的图像引用
-            //   Run()时会访问这些旧引用导致异常，先清理所有输入输出终端
+        
             foreach (CogToolBlockTerminal t in toolBlock.Inputs)
             {
                 t.Value = null;
@@ -454,19 +451,17 @@ namespace 视觉检测系统.业务流程.本地测试
                 t.Value = null;
             }
 
-            // 重新设置当前图像
+           
             toolBlock.Inputs["Input"].Value = image;
             toolBlock.Run();
             bool isOk = toolBlock.RunStatus.Result == CogToolResultConstants.Accept;
 
-            // ★修复：直接用image参数显示原图，不从toolBlock.Inputs取（Run后可能已释放）
+           
             mainform.displayStart.Image = image;
             mainform.displayStart.Fit();
 
-            // 显示结果图
             showResultImg(mainform.displayEnd, toolBlock);
 
-            // ★修复：原图用ICogImage重载直接存，不依赖控件
             if (isOk)
             {
                 saveImage.SaveVisionImage(image, true, saveImgSet.isSaveOkSourceImg, "Source");
@@ -544,7 +539,7 @@ namespace 视觉检测系统.业务流程.本地测试
                 }
                 finally
                 {
-                    AddLog.WriteLog("存图线程结束");
+                  //  AddLog.WriteLog("存图线程结束");
                 }
             });
             _saveThread.SetApartmentState(ApartmentState.STA);
@@ -605,13 +600,7 @@ namespace 视觉检测系统.业务流程.本地测试
             _producerThread.IsBackground = true;
             _producerThread.Start();
 
-            // ============================================================
-            // 消费者线程（STA）：检测 + Invoke刷新UI+存结果图 + 原图入存图队列
-            // ★修复：不克隆toolBlock，直接用原始toolBlock
-            //   - DeepClone丢失UserData(DisplayImageKey)导致showResultImg失败
-            //   - DeepClone的toolBlock.Run()会释放输入图像
-            //   - STA线程间COM调用自动marshal，直接用原始toolBlock安全
-            // ============================================================
+      
             _consumerThread = new Thread(() =>
             {
                 try
@@ -714,84 +703,259 @@ namespace 视觉检测系统.业务流程.本地测试
             AddLog.WriteLog("已停止批量检测");
         }
 
+        //public void showResultImg(CogRecordDisplay display, CogToolBlock toolBlock)
+        //{
+        //    display.Image = null;
+        //    display.Record = null;
+
+        //    try
+        //    {
+        //        ICogImage greyImage = null;
+        //        ICogImage colorImage = null;
+        //        string greyTerminalName = "";
+        //        string colorTerminalName = "";
+
+        //        foreach (CogToolBlockTerminal t in toolBlock.Outputs)
+        //        {
+        //            if (t.Value == null)
+        //                continue;
+
+        //            if (t.Value is CogImage8Grey grey)
+        //            {
+        //                greyImage = grey;
+        //                greyTerminalName = t.Name;
+        //            }
+        //            else if (t.Value is CogImage24PlanarColor color24)
+        //            {
+        //                colorImage = color24;
+        //                colorTerminalName = t.Name;
+        //            }
+        //        }
+
+        //        string key = "";
+        //        if (toolBlock.UserData.Contains("DisplayImageKey"))
+        //        {
+        //            key = toolBlock.UserData["DisplayImageKey"]?.ToString() ?? "";
+        //        }
+        //        //else
+        //        //{
+        //        //    AddLog.WriteLog("未设置任何输出图像，无法进行显示");
+        //        //    return;
+        //        //}
+
+        //        if (key != "")
+        //        {
+        //            ICogRecord record = toolBlock.CreateLastRunRecord();
+        //            ICogRecord imageRecord = FindRecordByKey(record, key);
+        //            if (imageRecord != null)
+        //            {
+        //                display.Record = imageRecord;
+        //                display.Fit();
+        //                AddLog.WriteLog("显示脚本图像成功");
+        //            }
+        //            else if (greyImage != null)
+        //            {
+        //                display.Image = greyImage;
+        //                display.Fit();
+        //            }
+        //            else if (colorImage != null)
+        //            {
+        //                display.Image = colorImage;
+        //                display.Fit();
+        //            }
+        //        }
+        //        else if (greyImage != null)
+        //        {
+        //            display.Image = greyImage;
+        //            display.Fit();
+        //        }
+        //        else if (colorImage != null)
+        //        {
+        //            display.Image = colorImage;
+        //            display.Fit();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        AddLog.WriteLog("显示结果图失败:" + ex.Message);
+        //    }
+        //}
         public void showResultImg(CogRecordDisplay display, CogToolBlock toolBlock)
         {
-            display.Image = null;
-            display.Record = null;
+            if (display == null || toolBlock == null)
+                return;
 
             try
             {
-                ICogImage greyImage = null;
-                ICogImage colorImage = null;
-                string greyTerminalName = "";
-                string colorTerminalName = "";
+                // =====================================================
+                // 1. 清空显示
+                // =====================================================
+                display.Record = null;
+                display.Image = null;
+                display.StaticGraphics.Clear();
+                display.InteractiveGraphics.Clear();
 
-                foreach (CogToolBlockTerminal t in toolBlock.Outputs)
+
+                // =====================================================
+                // 2. 获取 ToolBlock 输出的图片
+                //    优先找 OutputImage
+                //    如果没有，就自动找第一个 ICogImage 输出
+                // =====================================================
+                ICogImage image = null;
+
+                if (toolBlock.Outputs.Contains("OutputImage"))
                 {
-                    if (t.Value == null)
-                        continue;
+                    image = toolBlock.Outputs["OutputImage"].Value as ICogImage;
+                }
 
-                    if (t.Value is CogImage8Grey grey)
+                // 如果 OutputImage 没有图片，就自动寻找其他输出图片
+                if (image == null)
+                {
+                    foreach (CogToolBlockTerminal output in toolBlock.Outputs)
                     {
-                        greyImage = grey;
-                        greyTerminalName = t.Name;
-                    }
-                    else if (t.Value is CogImage24PlanarColor color24)
-                    {
-                        colorImage = color24;
-                        colorTerminalName = t.Name;
+                        if (output.Value is ICogImage)
+                        {
+                            image = output.Value as ICogImage;
+
+                            //AddLog.WriteLog(
+                            //    "自动找到输出图像：" + output.Name
+                            //);
+
+                            break;
+                        }
                     }
                 }
 
-                string key = "";
-                if (toolBlock.UserData.Contains("DisplayImageKey"))
+                if (image == null)
                 {
-                    key = toolBlock.UserData["DisplayImageKey"]?.ToString() ?? "";
-                }
-                else
-                {
-                    AddLog.WriteLog("未设置任何输出图像，无法进行显示");
+                    AddLog.WriteLog("没有找到任何 ICogImage 输出");
                     return;
                 }
 
-                if (key != "")
+
+                // =====================================================
+                // 3. 只把“当前输出图片”作为底图
+                // =====================================================
+                display.Image = image;
+
+
+                // =====================================================
+                // 4. 获取运行 Record
+                //    注意：
+                //    这里绝对不能：
+                //
+                //    display.Record = lastRecord;
+                //
+                //    否则 Record 中自己的图片会覆盖当前输出图片
+                // =====================================================
+                ICogRecord lastRecord = toolBlock.CreateLastRunRecord();
+
+                if (lastRecord == null)
                 {
-                    ICogRecord record = toolBlock.CreateLastRunRecord();
-                    ICogRecord imageRecord = FindRecordByKey(record, key);
-                    if (imageRecord != null)
-                    {
-                        display.Record = imageRecord;
-                        display.Fit();
-                        AddLog.WriteLog("显示脚本图像成功");
-                    }
-                    else if (greyImage != null)
-                    {
-                        display.Image = greyImage;
-                        display.Fit();
-                    }
-                    else if (colorImage != null)
-                    {
-                        display.Image = colorImage;
-                        display.Fit();
-                    }
-                }
-                else if (greyImage != null)
-                {
-                    display.Image = greyImage;
+                    AddLog.WriteLog("LastRunRecord为空");
                     display.Fit();
+                    return;
                 }
-                else if (colorImage != null)
+
+
+                // =====================================================
+                // 5. 从 Record 中递归寻找 Graphic
+                //    只拿 Graphic，不拿 Record 里的 Image
+                // =====================================================
+                Action<ICogRecord> findGraphic = null;
+
+                findGraphic = record =>
                 {
-                    display.Image = colorImage;
-                    display.Fit();
-                }
+                    if (record == null)
+                        return;
+
+                    try
+                    {
+                        // ---------------------------------------------
+                        // 当前 Record 是 Graphic
+                        // ---------------------------------------------
+                        ICogGraphic graphic =
+                            record.Content as ICogGraphic;
+
+                        if (graphic != null)
+                        {
+                            try
+                            {
+                                display.StaticGraphics.Add(
+                                    graphic,
+                                    "ToolBlockGraphics"
+                                );
+                            }
+                            catch
+                            {
+                                // 忽略重复Graphic
+                            }
+                        }
+
+
+                        // ---------------------------------------------
+                        // 当前 Record 是 Graphic 集合
+                        // ---------------------------------------------
+                        CogGraphicCollection graphicCollection =
+                            record.Content as CogGraphicCollection;
+
+                        if (graphicCollection != null)
+                        {
+                            foreach (ICogGraphic item in graphicCollection)
+                            {
+                                if (item == null)
+                                    continue;
+
+                                try
+                                {
+                                    display.StaticGraphics.Add(
+                                        item,
+                                        "ToolBlockGraphics"
+                                    );
+                                }
+                                catch
+                                {
+                                    // 忽略重复Graphic
+                                }
+                            }
+                        }
+
+
+                        // ---------------------------------------------
+                        // 继续寻找子Record
+                        // ---------------------------------------------
+                        foreach (ICogRecord subRecord in record.SubRecords)
+                        {
+                            findGraphic(subRecord);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        AddLog.WriteLog(
+                            "读取Graphic失败：" + ex.Message
+                        );
+                    }
+                };
+
+
+                // 开始寻找Graphic
+                findGraphic(lastRecord);
+
+
+                // =====================================================
+                // 6. 最终显示
+                // =====================================================
+                display.Fit();
+
+               // AddLog.WriteLog("检测结果显示完成：当前输出图片 + 程序Graphic");
             }
             catch (Exception ex)
             {
-                AddLog.WriteLog("显示结果图失败:" + ex.Message);
+                AddLog.WriteLog(
+                    "显示检测结果失败：" + ex.Message
+                );
             }
         }
-
         private ICogRecord FindRecordByKey(ICogRecord record, string key)
         {
             if (record == null) return null;

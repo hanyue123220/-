@@ -59,7 +59,7 @@ internal class AddLog
         try
         {
             string content =
-                $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}]  {msg}\r\n";
+                $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss:fff}]  {msg}\r\n";
 
 
             // 写入当前运行日志
@@ -113,7 +113,14 @@ internal class AddLog
             txtLog.Text = File.ReadAllText(LogPath);
         }
 
-
+        logForm.Shown += (s, e) =>
+        {
+            txtLog.BeginInvoke(new Action(() =>
+            {
+                txtLog.SelectionStart = txtLog.TextLength;
+                txtLog.ScrollToCaret();
+            }));
+        };
         logForm.Controls.Add(txtLog);
 
         logForm.ShowDialog();
